@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Sanitize Inputs
-$name = clean($_POST['name'] ?? '');
+$name = clean($_POST['customer_name'] ?? '');
 $email = filter_var(clean($_POST['email'] ?? ''), FILTER_VALIDATE_EMAIL);
 $pass = $_POST['password'] ?? '';
 $country = clean($_POST['country'] ?? '');

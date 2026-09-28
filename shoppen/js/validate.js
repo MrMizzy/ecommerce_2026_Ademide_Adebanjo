@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (registerForm) {
         registerForm.addEventListener('submit', function(event) {
             // Clear all error messages before validation
-            document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+            document.querySelectorAll('.error-msg').forEach(msg => msg.style.display = 'none');
 
             // Take input values
             const customer_name = document.getElementById('customer_name').value.trim();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value.trim();
-            const confirmPassword = document.getElementById('confirm-password').value.trim();
+            const confirmPassword = document.getElementById('confirm_password').value.trim();
             const contact = document.getElementById('contact').value.trim();
 
             // Define regex patterns
@@ -28,28 +28,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 return; // Exit early if any field is empty
             }
 
-            if (cusomer_name.length < 2) {
-                document.getElementById('name_error').style.display = 'block';
+            if (customer_name.length < 2) {
+                document.getElementById('name-error').style.display = 'block';
                 isValid = false;
             }
 
             if (!emailRegex.test(email)) {
-                document.getElementById('email_error').style.display = 'block';
+                document.getElementById('email-error').style.display = 'block';
                 isValid = false;
             }
 
             if (!passRegex.test(password)) {
-                document.getElementById('password_error').style.display = 'block';
+                document.getElementById('password-error').style.display = 'block';
                 isValid = false;
             }
 
             if (password !== confirmPassword) {
-                document.getElementById('confirm_password_error').style.display = 'block';
+                document.getElementById('confirm-password-error').style.display = 'block';
                 isValid = false;
             }
 
             if (!phoneRegex.test(contact)) {
-                document.getElementById('contact_error').style.display = 'block';
+                document.getElementById('contact-error').style.display = 'block';
                 isValid = false;
             }
 

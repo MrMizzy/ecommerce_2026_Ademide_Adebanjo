@@ -3,12 +3,12 @@ require_once "../core/core.php";
 require_once "../controllers/CustomerController.php";
 
 // Only allow POST requests for login
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect(BASE_URL.'views/login.php');
 }
 
 // Sanitize input
-$email = filter_var_array($_POST['email'], [FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL])[0] ?? '';
+$email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
 $pass = $_POST['password'] ?? ''; // Default to empty string if not set
 
 if (empty($email) || empty($pass)) {
@@ -31,7 +31,7 @@ if ($result['success']) {
     $_SESSION['user_role'] = $user['user_role'];
 
     // Redirect to home page or dashboard after successful login
-    redirect(BASE_URL.'index.php');
+    redirect(BASE_URL.'/index.php');
 } else {
     // Set error message and redirect back to login page
     set_flash('error', $result['error']);
