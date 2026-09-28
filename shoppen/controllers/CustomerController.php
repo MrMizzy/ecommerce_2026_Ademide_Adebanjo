@@ -30,4 +30,14 @@ class CustomerController {
             return ['success' => false, 'error' => 'Registration failed. Please try again.'];
         }
     }
+
+    public function login($email, $pass) {
+        $customer = $this->model->login($email, $pass);
+        
+        if ($customer) {
+            return ['success' => true, 'data' => $customer];
+        } else {
+            return ['success' => false, 'error' => 'Invalid email or password'];
+        }
+    }
 }

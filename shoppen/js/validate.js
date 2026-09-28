@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register-form');
 
     if (registerForm) {
-        registerForm.getElementById('submit-btn').addEventListener('click', function(event) {
+        registerForm.addEventListener('submit', function(event) {
             // Clear all error messages before validation
             document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
 
@@ -54,33 +54,49 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (!isValid) {
-                event.preventDefault(); // Prevent form submission if validation fails
+                // If validation fails, return early and do not proceed with form submission
+                console.log('Validation failed');
+                event.preventDefault(); // Prevent the form from submitting
+                return;
             } else {
                 // Give visual feedback for successful validation
                 const btn = document.getElementById('submit-btn');
-                btn.textContent = 'Submitting...';
+                btn.innerText = 'Submitting...';
                 btn.disabled = true; // Disable the button to prevent multiple submissions
 
-                // Send the form data to action for processing
-                var formData = new FormData(registerForm);
+                // Since event listener is on the form's submit event and is synchronous,
+                // we don't need to call submit() here. The form will submit naturally after this function completes if no errors are found.
+            }
+        });
+    }
 
-                fetch('../actions/register_action.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                // Parse the response as JSON
-                .then(response => response.json())
-                .then(function(data) {
-                    console.log(data.message); // Log the response for debugging
+    const loginForm = document.getElementById('login-form');
 
-                    if (data.success) {
-                        // Redirect to the login page on successful registration
-                        window.location.href = '../login.php';
-                    }
-                    })
-                    .catch(function(error) {
-                        console.error('Error:', error);
-                    });
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            let isValid = true;
+
+            // Ensure the email is in a valid format
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                isValid = false;
+            }
+
+            // Ensure password is not empty
+            if (password.trim() === '') {
+                alert("Password cannot be empty.");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault(); 
+            } else {
+                document.getElementById('login-btn').innerText = 'Logging in...';
+                document.getElementById('login-btn').disabled = true;
             }
         });
     }

@@ -34,4 +34,28 @@ class CustomerClass extends Database {
         
         return $success ? $insert_id : false;
     }
+
+    public function getCustomerByEmail($email) {
+        $stmt = $this->conn->prepare("SELECT * FROM customer WHERE customer_email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        return $row ? $row : false;
+    }
+
+    public function login($email, $pass) {
+        // Fetch the user array
+        $row = $this->getCustomerByEmail($email);
+        
+        // If user exists, verify the password against the database hash
+        if ($row && password_verify($pass, $row['customer_pass'])) {
+            return $row;
+        }
+        
+        return false;
+    }
 }
