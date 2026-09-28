@@ -6,7 +6,7 @@ require_once 'layout/header.php';
 <main class="login-container">
     <h2>Login</h2>
 
-    <?php if (get_flash('error')): ?>
+    <?php if ($error = get_flash('error')): ?>
         <div class="error-alert"style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px;">
             <?= htmlspecialchars($error) ?>
         </div>
