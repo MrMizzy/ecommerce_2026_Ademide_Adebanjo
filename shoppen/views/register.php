@@ -1,6 +1,6 @@
 <?php
-require_once("../core/core.php");
-require_once("layout/header.php");
+require_once "../core/core.php";
+require_once "layout/header.php";
 ?>
 
 <main class="register-container">

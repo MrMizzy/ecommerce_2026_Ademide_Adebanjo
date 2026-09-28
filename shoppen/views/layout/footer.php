@@ -4,6 +4,6 @@
     </div>
 </footer>
 
-<script src="js/validate.js"></script>
+<script src= <?= BASE_URL . '/js/validate.js' ?> ></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ $productController = new ProductController();
 if (isset($_GET['category'])) {
     $products = $productController->getProductsByCategory($_GET['category']);
 } elseif (isset($_GET['brand'])) {
-    $products = $productController->getProductsByCategoryId($_GET['brand']);
+    $products = $productController->getProductsByBrand($_GET['brand']);
 }else {
     $products = $productController->getFeaturedProducts();
 }

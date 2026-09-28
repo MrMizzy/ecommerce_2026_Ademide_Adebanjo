@@ -12,7 +12,7 @@ require_once 'layout/header.php';
         </div>
     <?php endif; ?>
 
-    <form id="login-form">
+    <form id="login-form" action="../actions/login_action.php" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -23,7 +23,7 @@ require_once 'layout/header.php';
             <input type="password" id="password" name="password" required>
         </div>
 
-        <button type="button" id="login-btn">Login</button>
+        <button type="submit" id="login-btn">Login</button>
     </form>
 
     <div class="register-link" style="margin-top: 20px;">
