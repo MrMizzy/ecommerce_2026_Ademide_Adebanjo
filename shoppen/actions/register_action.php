@@ -33,3 +33,13 @@ $data = [
 
 $result = $controller->register($data);
 
+// Handle and redirect based on the result
+if ($result['success']) {
+    // Send them to the login page with a success message
+    set_flash('success', 'Registration successful! Please log in.');
+    redirect(BASE_URL . '/views/login.php');
+} else {
+    // Store error message and send them back to the form
+    set_flash('error', $result['error']);
+    redirect(BASE_URL . '/views/register.php');
+}

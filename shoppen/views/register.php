@@ -14,7 +14,7 @@ require_once("layout/header.php");
     <?php endif; ?>
 
     <!-- Registration form -->
-    <form id="register-form">
+    <form id="register-form" action="../actions/register_action.php" method="POST">
         <div class="form-group">
             <label for="customer_name">Full Name:</label>
             <input type="text" id="customer_name" name="customer_name" required>
@@ -61,7 +61,7 @@ require_once("layout/header.php");
             <span class="error-msg" id="contact-error" style="color: red; display: none;">Please enter a valid contact number.</span>
         </div>
 
-        <button type="button" id="submit-btn">Register</button>
+        <button type="submit" id="submit-btn">Register</button>
         <span class="error-msg" id="missing-fields-error" style="color: red; display: none;">Please fill in all required fields.</span>
     </form>
 </main>
