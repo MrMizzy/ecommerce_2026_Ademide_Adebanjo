@@ -10,7 +10,7 @@ if (!defined('BASE_PATH')) {
     define('BASE_PATH', dirname(__DIR__) . '/');
 }
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/ecomm/shoppen');
+    define('BASE_URL', '/e-commerce-labs/shoppen');
 }
 
 // Include database class
