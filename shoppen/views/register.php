@@ -30,7 +30,7 @@ require_once "layout/header.php";
         <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <span class="error-msg" id="password-error" style="color: red; display: none;">Password must be at least 8 characters and include a number.</span>
+            <span class="error-msg" id="password-error" style="color: red; display: none;">Password must be at least 8 characters and include uppercase, lowercase, number, and special character.</span>
         </div>
 
         <div>

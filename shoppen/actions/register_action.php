@@ -18,10 +18,17 @@ $contact = clean($_POST['contact'] ?? '');
 // Validate field constraints
 if (!$email || strlen($email) > 50) {
     set_flash('error', 'Invalid email address or exceeds 50 characters.');
+    redirect(BASE_URL . '/views/register.php');
 }
 
 if (empty($name) || empty($pass) || empty($country)) {
     set_flash('error', 'Please fill in all required fields.');
+    redirect(BASE_URL . '/views/register.php');
+}
+
+if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $pass)) {
+    set_flash('error', 'Password must be at least 8 characters and include uppercase, lowercase, numbers, and special characters.');
+    redirect(BASE_URL . '/views/register.php');
 }
 
 // Call Controller

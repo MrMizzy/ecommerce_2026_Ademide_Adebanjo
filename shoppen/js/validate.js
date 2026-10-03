@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Define regex patterns
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation pattern
             const phoneRegex = /^[0-9+\-\s]{7,15}$/; // Basic phone number validation pattern (7-15 digits, can include +, -, and spaces)
-            const passRegex = /^(?=.*\d).{8,}$/; // Password must be at least 8 characters long and contain at least one number
+            const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/; // Password must be at least 8 characters and include uppercase, lowercase, number, and special character.
 
             let isValid = true;
 
