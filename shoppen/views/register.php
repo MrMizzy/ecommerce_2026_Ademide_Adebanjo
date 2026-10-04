@@ -33,7 +33,7 @@ require_once "layout/header.php";
             <span class="error-msg" id="password-error" style="color: red; display: none;">Password must be at least 8 characters and include uppercase, lowercase, number, and special character.</span>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="confirm_password">Confirm Password:</label>
             <input type="password" id="confirm_password" name="confirm_password" required>
             <span class="error-msg" id="confirm-password-error" style="color: red; display: none;">Passwords do not match.</span>
@@ -55,7 +55,7 @@ require_once "layout/header.php";
             <input type="text" id="city" name="city" required>
         </div>
 
-        <div>
+        <div class="form-groupAdded sr">
             <label for="contact">Contact Number:</label>
             <input type="text" id="contact" name="contact" required>
             <span class="error-msg" id="contact-error" style="color: red; display: none;">Please enter a valid contact number.</span>
