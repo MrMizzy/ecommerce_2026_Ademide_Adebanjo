@@ -55,7 +55,7 @@ require_once "layout/header.php";
             <input type="text" id="city" name="city" required>
         </div>
 
-        <div class="form-groupAdded sr">
+        <div class="form-group">
             <label for="contact">Contact Number:</label>
             <input type="text" id="contact" name="contact" required>
             <span class="error-msg" id="contact-error" style="color: red; display: none;">Please enter a valid contact number.</span>
