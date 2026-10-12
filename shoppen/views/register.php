@@ -1,5 +1,5 @@
 <?php
-require_once BASE_PATH . "core/core.php";
+require_once "../core/core.php";
 require_once BASE_PATH . "views/layout/header.php";
 ?>
 

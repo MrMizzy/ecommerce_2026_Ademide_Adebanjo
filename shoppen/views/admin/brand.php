@@ -1,6 +1,6 @@
 <?php
 // views/admin/brand.php
-require_once BASE_PATH . 'core/core.php';
+require_once '../../core/core.php';
 require_admin(); // Security check MUST be first
 
 require_once BASE_PATH . 'views/layout/header.php';
