@@ -1,17 +1,17 @@
 <?php
 // views/admin/brand.php
-require_once '../../core/core.php';
+require_once BASE_PATH . 'core/core.php';
 require_admin(); // Security check MUST be first
 
-require_once '../layout/header.php';
-require_once '../../controllers/ProductController.php';
+require_once BASE_PATH . 'views/layout/header.php';
+require_once BASE_PATH . 'controllers/ProductController.php';
 
 $controller = new ProductController();
 $brands = $controller->getAllBrands();
 
 // Default form variables for "Add Mode"
 $mode = 'Add';
-$form_action = '../../actions/add_brand_action.php';
+$form_action = BASE_PATH . 'actions/add_brand_action.php';
 $current_brand_id = '';
 $current_brand_name = '';
 
@@ -22,7 +22,7 @@ if (isset($_GET['edit_id'])) {
     
     if ($brandToEdit) {
         $mode = 'Edit';
-        $form_action = '../../actions/update_brand_action.php';
+        $form_action = BASE_PATH . 'actions/update_brand_action.php';
         $current_brand_id = $brandToEdit['brand_id'];
         $current_brand_name = $brandToEdit['brand_name'];
     }
@@ -94,4 +94,4 @@ if (isset($_GET['edit_id'])) {
     </table>
 </main>
 
-<?php require_once '../layout/footer.php'; ?>
+<?php require_once  BASE_PATH . 'views/layout/footer.php'; ?>

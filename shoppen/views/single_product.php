@@ -16,7 +16,7 @@ if (!$product) {
 ?>
 <main class="product-detail-container" style="max-width: 1000px; margin: 2rem auto; padding: 20px; display: flex; gap: 40px;">
     <div class="product-image" style="flex: 1;">
-        <img src="../images/products/<?= htmlspecialchars($product['product_image']) ?>" alt="<?= htmlspecialchars($product['product_title']) ?>" style="width: 100%; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <img src="<?= BASE_URL ?>/images/products/<?= htmlspecialchars($product['product_image']) ?>" alt="<?= htmlspecialchars($product['product_title']) ?>" style="width: 100%; border-radius: 8px; border: 1px solid #e2e8f0;">
     </div>
     <div class="product-info" style="flex: 1;">
         <h2><?= htmlspecialchars($product['product_title']) ?></h2>
@@ -30,7 +30,7 @@ if (!$product) {
             <p><?= nl2br(htmlspecialchars($product['product_desc'])) ?></p>
         </div>
         
-        <a href="../actions/add_to_cart_action.php?add_cart=<?= htmlspecialchars($product['product_id']) ?>" 
+        <a href="<?= BASE_URL ?>/actions/add_to_cart_action.php?add_cart=<?= htmlspecialchars($product['product_id']) ?>" 
            style="display: inline-block; padding: 12px 24px; background: #22c55e; color: white; border-radius: 4px; font-weight: bold;">
            Add to Cart
         </a>

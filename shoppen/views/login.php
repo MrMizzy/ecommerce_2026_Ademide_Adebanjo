@@ -1,6 +1,6 @@
 <?php
-require_once '../core/core.php';
-require_once 'layout/header.php'; 
+require_once BASE_PATH . 'core/core.php';
+require_once BASE_PATH . 'views/layout/header.php'; 
 ?>
 
 <main class="login-container">
@@ -12,7 +12,7 @@ require_once 'layout/header.php';
         </div>
     <?php endif; ?>
 
-    <form id="login-form" action="../actions/login_action.php" method="POST">
+    <form id="login-form" action="<?= BASE_URL ?>/actions/login_action.php" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -31,4 +31,4 @@ require_once 'layout/header.php';
     </div>
 </main>
 
-<?php require_once 'layout/footer.php'; ?>
+<?php require_once  BASE_PATH . 'views/layout/footer.php'; ?>

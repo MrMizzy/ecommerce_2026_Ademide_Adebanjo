@@ -1,9 +1,9 @@
 <?php
-require_once '../../core/core.php';
+require_once BASE_PATH . 'core/core.php';
 require_admin();
 
-require_once  '../layout/header.php';
-require_once '../../controllers/ProductController.php';
+require_once  BASE_PATH . 'views/layout/header.php';
+require_once BASE_PATH . 'controllers/ProductController.php';
 
 $controller = new ProductController();
 $categories = $controller->getAllCategories();
@@ -141,4 +141,4 @@ if (isset($_GET['edit_id'])) {
     </table>
 </main>
 
-<?php require_once '../layout/footer.php'; ?>
+<?php require_once  BASE_PATH . 'views/layout/footer.php'; ?>

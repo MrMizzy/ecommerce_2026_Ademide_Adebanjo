@@ -1,6 +1,6 @@
 <?php
-require_once "../core/core.php";
-require_once "layout/header.php";
+require_once BASE_PATH . "core/core.php";
+require_once BASE_PATH . "views/layout/header.php";
 ?>
 
 <main class="register-container">
@@ -14,7 +14,7 @@ require_once "layout/header.php";
     <?php endif; ?>
 
     <!-- Registration form -->
-    <form id="register-form" action="../actions/register_action.php" method="POST">
+    <form id="register-form" action="<?= BASE_URL ?>/actions/register_action.php" method="POST">
         <div class="form-group">
             <label for="customer_name">Full Name:</label>
             <input type="text" id="customer_name" name="customer_name" required>
@@ -66,4 +66,4 @@ require_once "layout/header.php";
     </form>
 </main>
 
-<?php require_once ('layout/footer.php'); ?>
+<?php require_once BASE_PATH . 'views/layout/footer.php'; ?>
