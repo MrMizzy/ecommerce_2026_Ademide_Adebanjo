@@ -78,9 +78,23 @@ class ProductController {
         return $this->model->getAllProducts();
     }
     
-    // Temporary placeholders to keep views/home.php working
-    public function getFeaturedProducts() { return []; }
-    public function getProductsByCategory($cat_id) { return []; }
-    public function getProductsByBrand($brand_id) { return []; }    
+    public function getFeaturedProducts($limit = 6) {
+        return $this->model->getFeaturedProducts($limit);
+    }
+
+    public function getProductsByCategory($cat_id) {
+        if (!is_numeric($cat_id)) return [];
+        return $this->model->getProductsByCategory($cat_id);
+    }
+
+    public function getProductsByBrand($brand_id) {
+        if (!is_numeric($brand_id)) return [];
+        return $this->model->getProductsByBrand($brand_id);
+    }
+
+    public function searchProducts($query) {
+        $clean_query = trim($query);
+        if (empty($clean_query)) return [];
+        return $this->model->searchProducts($clean_query);
+    }
 }
-?>

@@ -140,4 +140,61 @@ class ProductClass extends Database {
         }
         return $products;
     }
+
+    // Fetch random featured products for the home page
+    public function getFeaturedProducts($limit = 6) {
+        $stmt = $this->conn->prepare("SELECT * FROM products ORDER BY RAND() LIMIT ?");
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+        $stmt->close();
+        return $products;
+    }
+
+    // Fetch products by category ID
+    public function getProductsByCategory($cat_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM products WHERE product_cat = ?");
+        $stmt->bind_param("i", $cat_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+        $stmt->close();
+        return $products;
+    }
+
+    // Fetch products by brand ID
+    public function getProductsByBrand($brand_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM products WHERE product_brand = ?");
+        $stmt->bind_param("i", $brand_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+        $stmt->close();
+        return $products;
+    }
+
+    // Search products by title or keywords
+    public function searchProducts($query) {
+        $stmt = $this->conn->prepare("SELECT * FROM products WHERE product_title LIKE ? OR product_keywords LIKE ?");
+        $searchTerm = '%' . $query . '%';
+        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+        $stmt->close();
+        return $products;
+    }
 }
