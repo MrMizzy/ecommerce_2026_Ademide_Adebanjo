@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (in_array($_FILES['product_image']['type'], $allowed)) {
             $filename = uniqid() . '_' . basename($_FILES['product_image']['name']);
-            $target_path = BASE_URL . '/images/products/' . $filename;
+            $target_path = BASE_PATH . '/images/products/' . $filename;
             
             if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_path)) {
                 $image_filename = $filename;
