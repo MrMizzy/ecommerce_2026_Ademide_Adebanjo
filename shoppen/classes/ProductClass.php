@@ -98,4 +98,46 @@ class ProductClass extends Database {
         
         return $success;
     }
+
+    // Add a new product
+    public function addProduct($cat, $brand, $title, $price, $desc, $image_filename, $keywords) {
+        $stmt = $this->conn->prepare("INSERT INTO products (product_cat, product_brand, product_title, product_price, product_desc, product_image, product_keywords) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisdsss", $cat, $brand, $title, $price, $desc, $image_filename, $keywords);
+        $success = $stmt->execute();
+        $stmt->close();
+        return $success;
+    }
+
+    // Update an existing product
+    public function updateProduct($id, $cat, $brand, $title, $price, $desc, $image_filename, $keywords) {
+        $stmt = $this->conn->prepare("UPDATE products SET product_cat = ?, product_brand = ?, product_title = ?, product_price = ?, product_desc = ?, product_image = ?, product_keywords = ? WHERE product_id = ?");
+        $stmt->bind_param("iisdsssi", $cat, $brand, $title, $price, $desc, $image_filename, $keywords, $id);
+        $success = $stmt->execute();
+        $stmt->close();
+        return $success;
+    }
+
+    // Fetch a single product by its ID with JOINs
+    public function getProductById($id) {
+        $stmt = $this->conn->prepare("SELECT p.*, c.cat_name, b.brand_name FROM products p JOIN categories c ON p.product_cat = c.cat_id JOIN brands b ON p.product_brand = b.brand_id WHERE p.product_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        return $row ? $row : false;
+    }
+    
+    // Fetch all products for the admin table
+    public function getAllProducts() {
+        $sql = "SELECT p.*, c.cat_name, b.brand_name FROM products p JOIN categories c ON p.product_cat = c.cat_id JOIN brands b ON p.product_brand = b.brand_id ORDER BY p.product_id DESC";
+        $result = $this->conn->query($sql);
+        $products = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $products[] = $row;
+            }
+        }
+        return $products;
+    }
 }

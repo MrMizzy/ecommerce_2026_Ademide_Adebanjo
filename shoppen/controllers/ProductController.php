@@ -54,6 +54,29 @@ class ProductController {
         }
         return $this->model->updateCategory($id, $name);
     }
+
+    // --- PRODUCT METHODS ---
+    public function addProduct($cat, $brand, $title, $price, $desc, $image_filename, $keywords) {
+        if (empty($title) || empty($price) || empty($cat) || empty($brand)) {
+            return false;
+        }
+        return $this->model->addProduct($cat, $brand, $title, $price, $desc, $image_filename, $keywords);
+    }
+
+    public function updateProduct($id, $cat, $brand, $title, $price, $desc, $image_filename, $keywords) {
+        if (empty($title) || empty($price) || empty($id)) {
+            return false;
+        }
+        return $this->model->updateProduct($id, $cat, $brand, $title, $price, $desc, $image_filename, $keywords);
+    }
+
+    public function getProductById($id) {
+        return $this->model->getProductById($id);
+    }
+
+    public function getAllProducts() {
+        return $this->model->getAllProducts();
+    }
     
     // Temporary placeholders to keep views/home.php working
     public function getFeaturedProducts() { return []; }
