@@ -1,1 +1,0 @@
-echo "php_flag engine off" > images/.htaccess
