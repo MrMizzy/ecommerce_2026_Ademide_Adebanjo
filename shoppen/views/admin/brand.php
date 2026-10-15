@@ -11,7 +11,7 @@ $brands = $controller->getAllBrands();
 
 // Default form variables for "Add Mode"
 $mode = 'Add';
-$form_action = BASE_PATH . 'actions/add_brand_action.php';
+$form_action = BASE_URL . '/actions/add_brand_action.php';
 $current_brand_id = '';
 $current_brand_name = '';
 
@@ -22,7 +22,7 @@ if (isset($_GET['edit_id'])) {
     
     if ($brandToEdit) {
         $mode = 'Edit';
-        $form_action = BASE_PATH . 'actions/update_brand_action.php';
+        $form_action = BASE_URL . '/actions/update_brand_action.php';
         $current_brand_id = $brandToEdit['brand_id'];
         $current_brand_name = $brandToEdit['brand_name'];
     }

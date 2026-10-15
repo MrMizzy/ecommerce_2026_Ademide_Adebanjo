@@ -10,7 +10,7 @@ $categories = $controller->getAllCategories();
 
 // Default form variables for "Add Mode"
 $mode = 'Add';
-$form_action = BASE_PATH . 'actions/add_category_action.php';
+$form_action = BASE_URL . '/actions/add_category_action.php';
 $current_cat_id = '';
 $current_cat_name = '';
 
@@ -21,7 +21,7 @@ if (isset($_GET['edit_id'])) {
     
     if ($catToEdit) {
         $mode = 'Edit';
-        $form_action = BASE_PATH . 'actions/update_category_action.php';
+        $form_action = BASE_URL . '/actions/update_category_action.php';
         $current_cat_id = $catToEdit['cat_id'];
         $current_cat_name = $catToEdit['cat_name'];
     }
