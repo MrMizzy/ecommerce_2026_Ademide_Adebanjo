@@ -27,4 +27,18 @@ class CartController {
     public function getCartTotal($ip) {
         return $this->model->getCartTotal($ip);
     }
+
+    public function removeFromCart($product_id, $ip) {
+        if (!filter_var($product_id, FILTER_VALIDATE_INT)) {
+            return false;
+        }
+        return $this->model->removeFromCart($product_id, $ip);
+    }
+
+    public function updateQty($product_id, $new_qty, $ip) {
+        if (!filter_var($product_id, FILTER_VALIDATE_INT) || !filter_var($new_qty, FILTER_VALIDATE_INT) || $new_qty < 1) {
+            return false;
+        }
+        return $this->model->updateQty($product_id, $new_qty, $ip);
+    }
 }

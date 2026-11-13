@@ -56,4 +56,26 @@ class CartClass extends Database {
         }
         return $total;
     }
+
+    // Remove a specific product from the cart
+    public function removeFromCart($product_id, $ip) {
+        $stmt = $this->conn->prepare("DELETE FROM cart WHERE p_id = ? AND ip_add = ?");
+        $stmt->bind_param("is", $product_id, $ip);
+        $success = $stmt->execute();
+        $stmt->close();
+        return $success;
+    }
+
+    // Update the quantity of a specific product
+    public function updateQty($product_id, $new_qty, $ip) {
+        // Double-check the quantity at the database layer
+        if ($new_qty < 1) {
+            return false;
+        }
+        $stmt = $this->conn->prepare("UPDATE cart SET qty = ? WHERE p_id = ? AND ip_add = ?");
+        $stmt->bind_param("iis", $new_qty, $product_id, $ip);
+        $success = $stmt->execute();
+        $stmt->close();
+        return $success;
+    }
 }
