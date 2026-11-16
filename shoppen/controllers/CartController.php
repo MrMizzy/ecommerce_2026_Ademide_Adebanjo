@@ -41,4 +41,18 @@ class CartController {
         }
         return $this->model->updateQty($product_id, $new_qty, $ip);
     }
+
+    public function processPayment($customer_id, $ip, $reference, $amount, $currency = 'GHS') {
+        if (!filter_var($customer_id, FILTER_VALIDATE_INT) || $amount <= 0) {
+            return false;
+        }
+        return $this->model->processPayment($customer_id, $ip, $reference, $amount, $currency);
+    }
+
+    public function getOrderById($order_id) {
+        if (!filter_var($order_id, FILTER_VALIDATE_INT)) {
+            return [];
+        }
+        return $this->model->getOrderById($order_id);
+    }
 }

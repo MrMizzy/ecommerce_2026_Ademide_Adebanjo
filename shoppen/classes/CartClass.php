@@ -78,4 +78,100 @@ class CartClass extends Database {
         $stmt->close();
         return $success;
     }
+
+    // Process order, order details, payment record, and empty cart inside a DB transaction
+    public function processPayment($customer_id, $ip, $reference, $amount, $currency = 'GHS') {
+        $this->conn->begin_transaction();
+
+        try {
+            // Fetch current cart items before clearing
+            $cart_items = $this->getCartItems($ip);
+            if (empty($cart_items)) {
+                throw new Exception("Cart is empty.");
+            }
+
+            // Generate invoice number & date
+            $invoice_no = mt_rand(100000, 999999);
+            $order_date = date('Y-m-d');
+            $order_status = 'paid';
+
+            // INSERT into orders table (matching shoppn_empty.sql schema)
+            $stmtOrder = $this->conn->prepare(
+                "INSERT INTO orders (customer_id, invoice_no, order_date, order_status) VALUES (?, ?, ?, ?)"
+            );
+            $stmtOrder->bind_param("iiss", $customer_id, $invoice_no, $order_date, $order_status);
+            if (!$stmtOrder->execute()) {
+                throw new Exception("Failed to insert order.");
+            }
+            $order_id = $stmtOrder->insert_id;
+            $stmtOrder->close();
+
+            // Copy cart rows into orderdetails table
+            $stmtDetails = $this->conn->prepare(
+                "INSERT INTO orderdetails (order_id, product_id, qty) VALUES (?, ?, ?)"
+            );
+            foreach ($cart_items as $item) {
+                $p_id = $item['p_id'];
+                $qty  = $item['qty'];
+                $stmtDetails->bind_param("iii", $order_id, $p_id, $qty);
+                if (!$stmtDetails->execute()) {
+                    throw new Exception("Failed to insert order details.");
+                }
+            }
+            $stmtDetails->close();
+
+            // Record payment in payment table
+            $stmtPay = $this->conn->prepare(
+                "INSERT INTO payment (amt, customer_id, order_id, currency, payment_date) VALUES (?, ?, ?, ?, ?)"
+            );
+            $stmtPay->bind_param("diiss", $amount, $customer_id, $order_id, $currency, $order_date);
+            if (!$stmtPay->execute()) {
+                throw new Exception("Failed to record payment.");
+            }
+            $stmtPay->close();
+
+            // DELETE from cart WHERE ip_add = ?
+            $stmtClear = $this->conn->prepare("DELETE FROM cart WHERE ip_add = ?");
+            $stmtClear->bind_param("s", $ip);
+            if (!$stmtClear->execute()) {
+                throw new Exception("Failed to clear cart.");
+            }
+            $stmtClear->close();
+
+            // Commit transaction
+            $this->conn->commit();
+            return $order_id;
+
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            error_log("Payment Transaction Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Fetch order header and joined product line items for the invoice
+    public function getOrderById($order_id) {
+        $stmt = $this->conn->prepare(
+            "SELECT o.order_id, o.customer_id, o.invoice_no, o.order_date, o.order_status,
+                    c.customer_name, c.customer_email,
+                    od.product_id, od.qty,
+                    p.product_title, p.product_price, p.product_image
+             FROM orders o
+             JOIN customer c ON o.customer_id = c.customer_id
+             JOIN orderdetails od ON o.order_id = od.order_id
+             JOIN products p ON od.product_id = p.product_id
+             WHERE o.order_id = ?"
+        );
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $rows = [];
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        $stmt->close();
+
+        return $rows;
+    }
 }
